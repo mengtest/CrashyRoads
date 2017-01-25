@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() {
 		if (isMoving && hasControl) {
-			print ("moving");
 			targetPos = startPos + new Vector3((1f-walkTime) * moveStep * movement.x, Mathf.Sin((1f-walkTime)*Mathf.PI) * moveStep, (1f-walkTime) * moveStep * movement.y);
 			walkTime -= Time.deltaTime* speed;
 			transform.position = targetPos;
@@ -30,9 +29,7 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		} else if(hasControl) {
 			Vector2 movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-			print (movementVector);
 			if(movementVector.sqrMagnitude > 0) {
-				print ("move");
 				Move(movementVector);
 			}
 		}

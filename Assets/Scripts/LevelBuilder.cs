@@ -26,6 +26,7 @@ public class LevelBuilder : MonoBehaviour {
 			}//change this to be the number for a double road 
 		}
 		Instantiate (player, new Vector3 (0, 1, 20), Quaternion.identity);
+		GameObject.FindObjectOfType<CameraControl> ().PlayerSpawned ();
 	}
 
 }

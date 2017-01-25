@@ -9,6 +9,11 @@ public class CameraControl : MonoBehaviour {
 	//The projectionmatrix is used to switch between perspective and orthographic cameras, which we can then use to switch
 	//between first and third person modes, where first person will be perspective and third person will be orthographic.
 	bool playerSpawned;
+	GameObject playerObject;
+	//playerSpawned and playerObject are used to get the camera to track the player's gameObject. When the player is spawned
+	//a function called PlayerSpawned() is called on this class, which first sets the bool playerSpawned to true, then
+	//gets the actual player object from the scene, storing it in the variable playerObject.
+
 	void Start() {
 		targetPos = transform.position;
 		targetRot = transform.rotation;
@@ -20,7 +25,10 @@ public class CameraControl : MonoBehaviour {
 
 	void Update() {
 		if (playerSpawned) {
-			targetPos = GameObject.FindObjectOfType<PlayerMovement> ().transform.position + new Vector3 (-6, 7, -10);
+			targetPos = playerObject.transform.position + new Vector3 (-6, 7, -10);
+			//first checks if we have already spawned the player with if(playerSpawned). If we have, then we can set the target 
+			//position of the camera to be the position of the player plus a bit of offset so that the camera stays far enough 
+			//away from the player that the rest of the game can be seen
 		}
 		transform.position = Vector3.Lerp (transform.position, targetPos, Time.deltaTime * 20f);
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, Time.deltaTime * 20f);
@@ -45,6 +53,16 @@ public class CameraControl : MonoBehaviour {
 	public void SetMatrixOrtho() {
 		//function to set the target matrix on the camera object to an orthographic 4x4 matrix
 
+	}
+
+	public void PlayerSpawned() {
+		print ("playerSpawned");
+		//function to tell the cameracontrol class when the player has been spawned.
+		//This is used later on, when in the update function we check for whether or
+		//not the player has been spawned.
+		bool playerSpawned = true;
+		playerObject = GameObject.FindObjectOfType<PlayerMovement> ().gameObject;
+		//setting the local variable playerObject to be the player GameObject by using FindObjectOfType.
 	}
 
 }
